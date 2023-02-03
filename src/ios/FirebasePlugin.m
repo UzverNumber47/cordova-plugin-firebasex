@@ -2010,14 +2010,8 @@ static FIRMultiFactorResolver* multiFactorResolver;
         @try {
             NSDictionary* document = [command.arguments objectAtIndex:0];
             NSString* collection = [command.arguments objectAtIndex:1];
-            bool  timestamp = [command.arguments objectAtIndex:2];
 
             NSMutableDictionary *document_mutable = [document mutableCopy];
-
-            if(timestamp){
-                document_mutable[@"created"] = [FIRTimestamp timestampWithDate:[NSDate date]];
-                document_mutable[@"lastUpdate"] = [FIRTimestamp timestampWithDate:[NSDate date]];
-            }
 
             __block FIRDocumentReference *ref =
             [[firestore collectionWithPath:collection] addDocumentWithData:document_mutable completion:^(NSError * _Nullable error) {
@@ -2035,13 +2029,8 @@ static FIRMultiFactorResolver* multiFactorResolver;
             NSString* documentId = [command.arguments objectAtIndex:0];
             NSDictionary* document = [command.arguments objectAtIndex:1];
             NSString* collection = [command.arguments objectAtIndex:2];
-            bool  timestamp = [command.arguments objectAtIndex:3];
 
             NSMutableDictionary *document_mutable = [document mutableCopy];
-
-            if(timestamp){
-                document_mutable[@"lastUpdate"] = [FIRTimestamp timestampWithDate:[NSDate date]];
-            }
 
             [[[firestore collectionWithPath:collection] documentWithPath:documentId] setData:document_mutable completion:^(NSError * _Nullable error) {
                 [self handleEmptyResultWithPotentialError:error command:command];
@@ -2058,13 +2047,8 @@ static FIRMultiFactorResolver* multiFactorResolver;
             NSString* documentId = [command.arguments objectAtIndex:0];
             NSDictionary* document = [command.arguments objectAtIndex:1];
             NSString* collection = [command.arguments objectAtIndex:2];
-            bool  timestamp = [command.arguments objectAtIndex:3];
 
             NSMutableDictionary *document_mutable = [document mutableCopy];
-
-            if(timestamp){
-                document_mutable[@"lastUpdate"] = [FIRTimestamp timestampWithDate:[NSDate date]];
-            }
 
             FIRDocumentReference* docRef = [[firestore collectionWithPath:collection] documentWithPath:documentId];
             if(docRef != nil){
