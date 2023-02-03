@@ -2866,14 +2866,8 @@ public class FirebasePlugin extends CordovaPlugin {
                 try {
                     String jsonDoc = args.getString(0);
                     String collection = args.getString(1);
-                    boolean timestamp = args.getBoolean(2);
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
-
-                    if(timestamp){
-                        docData.put("created", new Timestamp(new Date()));
-                        docData.put("lastUpdate", new Timestamp(new Date()));
-                    }
 
                     firestore.collection(collection)
                             .add(docData)
@@ -2903,13 +2897,8 @@ public class FirebasePlugin extends CordovaPlugin {
                     String documentId = args.getString(0);
                     String jsonDoc = args.getString(1);
                     String collection = args.getString(2);
-                    boolean timestamp = args.getBoolean(3);
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
-
-                    if(timestamp){
-                        docData.put("lastUpdate", new Timestamp(new Date()));
-                    }
 
                     firestore.collection(collection).document(documentId)
                             .set(docData)
@@ -2939,13 +2928,8 @@ public class FirebasePlugin extends CordovaPlugin {
                     String documentId = args.getString(0);
                     String jsonDoc = args.getString(1);
                     String collection = args.getString(2);
-                    boolean timestamp = args.getBoolean(3);
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
-
-                    if(timestamp){
-                        docData.put("lastUpdate", new Timestamp(new Date()));
-                    }
 
                     firestore.collection(collection).document(documentId)
                             .update(docData)
