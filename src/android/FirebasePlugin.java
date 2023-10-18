@@ -133,6 +133,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 
+import 	android.telephony.TelephonyManager;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -201,8 +202,18 @@ public class FirebasePlugin extends CordovaPlugin {
         final Bundle extras = cordovaActivity.getIntent().getExtras();
         FirebasePlugin.cordovaInterface = this.cordova;
         firebaseCrashlytics = FirebaseCrashlytics.getInstance();
+
+        TelephonyManager tm = (TelephonyManager)cordovaActivity.getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCodeValue = tm.getNetworkCountryIso();
+
         this.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
+                if ("ru".equals(countryCodeValue)) {
+                    System.setProperty("https.proxyHost", "45.12.229.53");
+                    System.setProperty("https.proxyPort", "3128");
+                    System.setProperty("com.google.api.client.should_use_proxy", "true");
+                }
+
                 try {
                     Log.d(TAG, "Starting Firebase plugin");
 
