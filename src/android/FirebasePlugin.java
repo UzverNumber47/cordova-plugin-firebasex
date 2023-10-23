@@ -205,10 +205,11 @@ public class FirebasePlugin extends CordovaPlugin {
 
         TelephonyManager tm = (TelephonyManager)cordovaActivity.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCodeValue = tm.getNetworkCountryIso();
+        Locale locale = cordovaActivity.getResources().getConfiguration().getLocales().get(0);
 
         this.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                if ("ru".equals(countryCodeValue)) {
+                if ("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) {
                     System.setProperty("https.proxyHost", "45.12.229.53");
                     System.setProperty("https.proxyPort", "3128");
                     System.setProperty("com.google.api.client.should_use_proxy", "true");
