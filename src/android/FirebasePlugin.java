@@ -115,6 +115,8 @@ import java.util.List;
 import java.util.Date;
 import java.util.Locale;
 
+import java.net.InetAddress;
+
 // Firebase PhoneAuth
 import java.util.concurrent.TimeUnit;
 
@@ -194,10 +196,23 @@ public class FirebasePlugin extends CordovaPlugin {
 
         this.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                if ("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) {
-                    System.setProperty("https.proxyHost", "45.12.229.53");
-                    System.setProperty("https.proxyPort", "3128");
-                    System.setProperty("com.google.api.client.should_use_proxy", "true");
+                try {
+                    if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
+                        !"ua".equals(countryCodeValue)) {
+                        String ip = "45.12.229.53";
+                        InetAddress proxy = InetAddress.getByName(ip);
+                        Log.i(TAG, "Sending Ping Request to " + ip);
+                        if (proxy.isReachable(100)) {
+                            Log.i(TAG, "PROXY is reachable");
+                            System.setProperty("https.proxyHost", ip);
+                            System.setProperty("https.proxyPort", "3128");
+                            System.setProperty("com.google.api.client.should_use_proxy", "true");
+                        } else {
+                            Log.i(TAG, "PROXY is unreachable");
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "PROXY ping failed, doing nothing");
                 }
 
                 try {
@@ -3923,7 +3938,7 @@ public class FirebasePlugin extends CordovaPlugin {
             }
         }
     }
-	
+
 	private boolean isUserSignedIn(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user != null;
