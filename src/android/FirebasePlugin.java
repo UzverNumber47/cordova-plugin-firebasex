@@ -218,7 +218,7 @@ public class FirebasePlugin extends CordovaPlugin {
                         String ip = "45.12.229.53";
                         InetAddress proxy = InetAddress.getByName(ip);
                         Log.i(TAG, "Sending Ping Request to " + ip);
-                        if (proxy.isReachable(1000)) {
+                        if (proxy.isReachable(3000)) {
                             Log.i(TAG, "PROXY is reachable");
                             System.setProperty("https.proxyHost", ip);
                             System.setProperty("https.proxyPort", "3128");
