@@ -215,12 +215,19 @@ public class FirebasePlugin extends CordovaPlugin {
                 try {
                     if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
                         !"ua".equals(countryCodeValue) && !"by".equals(countryCodeValue)) {
-                        String ip = "45.12.229.53";
+                            String ip = "srv27533891.ultasrv.net";
+                            String ip2 = "45.12.229.53";
                         InetAddress proxy = InetAddress.getByName(ip);
+                        InetAddress proxy2 = InetAddress.getByName(ip2);
                         Log.i(TAG, "Sending Ping Request to " + ip);
-                        if (proxy.isReachable(3000)) {
-                            Log.i(TAG, "PROXY is reachable");
+                        if (proxy.isReachable(2000)) {
+                            Log.i(TAG, "PROXY is reachable" + ip);
                             System.setProperty("https.proxyHost", ip);
+                            System.setProperty("https.proxyPort", "3128");
+                            System.setProperty("com.google.api.client.should_use_proxy", "true");
+                        } else if (proxy.isReachable(2000)) {
+                            Log.i(TAG, "PROXY is reachable" + ip2);
+                            System.setProperty("https.proxyHost", ip2);
                             System.setProperty("https.proxyPort", "3128");
                             System.setProperty("com.google.api.client.should_use_proxy", "true");
                         } else {
