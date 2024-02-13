@@ -220,12 +220,12 @@ public class FirebasePlugin extends CordovaPlugin {
                         InetAddress proxy = InetAddress.getByName(ip);
                         InetAddress proxy2 = InetAddress.getByName(ip2);
                         Log.i(TAG, "Sending Ping Request to " + ip);
-                        if (proxy.isReachable(2000)) {
+                        if (proxy.isReachable(1000)) {
                             Log.i(TAG, "PROXY is reachable" + ip);
                             System.setProperty("https.proxyHost", ip);
                             System.setProperty("https.proxyPort", "3128");
                             System.setProperty("com.google.api.client.should_use_proxy", "true");
-                        } else if (proxy.isReachable(2000)) {
+                        } else if (proxy.isReachable(1000)) {
                             Log.i(TAG, "PROXY is reachable" + ip2);
                             System.setProperty("https.proxyHost", ip2);
                             System.setProperty("https.proxyPort", "3128");
