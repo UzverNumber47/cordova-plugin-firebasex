@@ -215,7 +215,7 @@ public class FirebasePlugin extends CordovaPlugin {
                 try {
                     if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
                         !"ua".equals(countryCodeValue) && !"by".equals(countryCodeValue)) {
-                            String ip = "srv27533891.ultasrv.net";
+                            String ip = "159.100.6.171";
                             String ip2 = "45.12.229.53";
                         InetAddress proxy = InetAddress.getByName(ip);
                         InetAddress proxy2 = InetAddress.getByName(ip2);
