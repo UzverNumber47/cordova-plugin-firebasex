@@ -62,9 +62,9 @@ static NSMutableArray* pendingGlobalJS = nil;
     NSString *countryCode = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
                     
     if ([countryCode isEqualToString:@"RU"]) {
-        setenv("grpc_proxy", "http://srv27533891.ultasrv.net:3128", 1);
-        setenv("https_proxy", "http://srv27533891.ultasrv.net:3128", 1);
-        setenv("http_proxy", "http://srv27533891.ultasrv.net:3128", 1);
+        setenv("grpc_proxy", "http://159.100.6.171:3128", 1);
+        setenv("https_proxy", "http://159.100.6.171:3128", 1);
+        setenv("http_proxy", "http://159.100.6.171:3128", 1);
     }
     
 }
