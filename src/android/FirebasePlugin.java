@@ -117,6 +117,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.Locale;
+import java.util.Collections;
 
 import java.net.InetAddress;
 
@@ -212,30 +213,45 @@ public class FirebasePlugin extends CordovaPlugin {
 
         this.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                try {
-                    if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
+
+                if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
                         !"ua".equals(countryCodeValue) && !"by".equals(countryCodeValue)) {
-                            String ip = "159.100.6.171";
-                            String ip2 = "45.12.229.53";
-                        InetAddress proxy = InetAddress.getByName(ip);
-                        InetAddress proxy2 = InetAddress.getByName(ip2);
-                        Log.i(TAG, "Sending Ping Request to " + ip);
-                        if (proxy.isReachable(1000)) {
-                            Log.i(TAG, "PROXY is reachable" + ip);
-                            System.setProperty("https.proxyHost", ip);
-                            System.setProperty("https.proxyPort", "3128");
-                            System.setProperty("com.google.api.client.should_use_proxy", "true");
-                        } else if (proxy.isReachable(1000)) {
-                            Log.i(TAG, "PROXY is reachable" + ip2);
-                            System.setProperty("https.proxyHost", ip2);
-                            System.setProperty("https.proxyPort", "3128");
-                            System.setProperty("com.google.api.client.should_use_proxy", "true");
-                        } else {
-                            Log.i(TAG, "PROXY is unreachable");
+
+                    // Список IP-адресов
+                    List<String> ips = new ArrayList<>();
+                    ips.add("159.100.6.171");
+                    ips.add("45.12.229.53");
+
+                    // Перемешиваем список IP-адресов для случайного порядка проверки
+                    Collections.shuffle(ips);
+
+                    boolean proxySet = false;
+
+                    for (String ip : ips) {
+                        try {
+                            InetAddress proxy = InetAddress.getByName(ip);
+                            Log.d(TAG, "Sending Ping Request to " + ip);
+                            if (proxy.isReachable(1000)) {
+                                Log.d(TAG, "PROXY is reachable: " + ip);
+                                System.setProperty("https.proxyHost", ip);
+                                System.setProperty("https.proxyPort", "3128");
+                                System.setProperty("com.google.api.client.should_use_proxy", "true");
+                                proxySet = true;
+                                break; // Прекращаем поиск, если прокси найден
+                            } else {
+                                Log.d(TAG, "PROXY is unreachable: " + ip);
+                            }
+                        } catch (Exception e) {
+                            Log.d(TAG, "Error checking IP: " + ip);
+                            e.printStackTrace();
                         }
                     }
-                } catch (Exception e) {
-                    Log.e(TAG, "PROXY ping failed, doing nothing");
+
+                    if (!proxySet) {
+                        Log.d(TAG, "No PROXY server is reachable.");
+                    }
+                } else {// end of if russian user
+                    Log.d(TAG, "Not using proxy at all");
                 }
 
                 try {
