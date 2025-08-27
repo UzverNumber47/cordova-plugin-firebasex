@@ -115,11 +115,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.List;
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.EnumMap;
-=======
 import java.util.Locale;
->>>>>>> e63205d (add missing  import java.util.Locale;)
 
 import java.net.InetAddress;
 
@@ -217,11 +214,11 @@ public class FirebasePlugin extends CordovaPlugin {
             public void run() {
                 try {
                     if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
-                        !"ua".equals(countryCodeValue)) {
+                        !"ua".equals(countryCodeValue) && !"by".equals(countryCodeValue)) {
                         String ip = "45.12.229.53";
                         InetAddress proxy = InetAddress.getByName(ip);
                         Log.i(TAG, "Sending Ping Request to " + ip);
-                        if (proxy.isReachable(100)) {
+                        if (proxy.isReachable(1000)) {
                             Log.i(TAG, "PROXY is reachable");
                             System.setProperty("https.proxyHost", ip);
                             System.setProperty("https.proxyPort", "3128");
@@ -4291,10 +4288,14 @@ public class FirebasePlugin extends CordovaPlugin {
             }
         }
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     private boolean isUserSignedIn() {
 =======
+=======
+
+>>>>>>> 33eabf8 (also exclude by from using proxy)
 	private boolean isUserSignedIn(){
 >>>>>>> e648556 (ping proxy before making requests)
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
