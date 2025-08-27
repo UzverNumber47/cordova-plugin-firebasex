@@ -4311,16 +4311,8 @@ public class FirebasePlugin extends CordovaPlugin {
             }
         }
     }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-    private boolean isUserSignedIn() {
-=======
-=======
-
->>>>>>> 33eabf8 (also exclude by from using proxy)
-	private boolean isUserSignedIn(){
->>>>>>> e648556 (ping proxy before making requests)
+	private boolean isUserSignedIn() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user != null;
     }
