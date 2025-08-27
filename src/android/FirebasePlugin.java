@@ -115,7 +115,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.List;
 import java.util.Date;
+<<<<<<< HEAD
 import java.util.EnumMap;
+=======
+import java.util.Locale;
+>>>>>>> e63205d (add missing  import java.util.Locale;)
 
 // Firebase PhoneAuth
 import java.util.concurrent.TimeUnit;
@@ -3179,13 +3183,6 @@ public class FirebasePlugin extends CordovaPlugin {
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
 
-<<<<<<< HEAD
-                    if (timestamp) {
-                        docData.put("lastUpdate", new Timestamp(new Date()));
-                    }
-
-=======
->>>>>>> 9519487 (remove timestamps from android)
                     firestore.collection(collection).document(documentId)
                             .set(docData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
