@@ -276,7 +276,7 @@ public class FirebasePlugin extends CordovaPlugin {
                     defaultChannelId = getStringResource("default_notification_channel_id");
                     defaultChannelName = getStringResource("default_notification_channel_name");
                     createDefaultChannel();
-                    pluginInitialized = true;                   
+                    pluginInitialized = true;
 
                 } catch (Exception e) {
                     handleExceptionWithoutContext(e);
@@ -290,7 +290,7 @@ public class FirebasePlugin extends CordovaPlugin {
         if (id == null) {
             return super.onMessage(id, data);
         }
-        if("onPageFinished".equals(id)){       
+        if("onPageFinished".equals(id)){
             Log.d(TAG, "Page ready init javascript");
             executePendingGlobalJavascript();
             return null;
@@ -3133,14 +3133,8 @@ public class FirebasePlugin extends CordovaPlugin {
                 try {
                     String jsonDoc = args.getString(0);
                     String collection = args.getString(1);
-                    boolean timestamp = args.getBoolean(2);
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
-
-                    if (timestamp) {
-                        docData.put("created", new Timestamp(new Date()));
-                        docData.put("lastUpdate", new Timestamp(new Date()));
-                    }
 
                     firestore.collection(collection)
                             .add(docData)
@@ -3170,14 +3164,16 @@ public class FirebasePlugin extends CordovaPlugin {
                     String documentId = args.getString(0);
                     String jsonDoc = args.getString(1);
                     String collection = args.getString(2);
-                    boolean timestamp = args.getBoolean(3);
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
 
+<<<<<<< HEAD
                     if (timestamp) {
                         docData.put("lastUpdate", new Timestamp(new Date()));
                     }
 
+=======
+>>>>>>> 9519487 (remove timestamps from android)
                     firestore.collection(collection).document(documentId)
                             .set(docData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -3206,14 +3202,16 @@ public class FirebasePlugin extends CordovaPlugin {
                     String documentId = args.getString(0);
                     String jsonDoc = args.getString(1);
                     String collection = args.getString(2);
-                    boolean timestamp = args.getBoolean(3);
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
 
+<<<<<<< HEAD
                     if (timestamp) {
                         docData.put("lastUpdate", new Timestamp(new Date()));
                     }
 
+=======
+>>>>>>> 9519487 (remove timestamps from android)
                     firestore.collection(collection).document(documentId)
                             .update(docData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
