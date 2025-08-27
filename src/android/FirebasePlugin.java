@@ -121,6 +121,8 @@ import java.util.EnumMap;
 import java.util.Locale;
 >>>>>>> e63205d (add missing  import java.util.Locale;)
 
+import java.net.InetAddress;
+
 // Firebase PhoneAuth
 import java.util.concurrent.TimeUnit;
 
@@ -213,10 +215,23 @@ public class FirebasePlugin extends CordovaPlugin {
 
         this.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                if ("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) {
-                    System.setProperty("https.proxyHost", "45.12.229.53");
-                    System.setProperty("https.proxyPort", "3128");
-                    System.setProperty("com.google.api.client.should_use_proxy", "true");
+                try {
+                    if (("ru".equals(countryCodeValue) || "RU".equals(locale.getCountry())) &&
+                        !"ua".equals(countryCodeValue)) {
+                        String ip = "45.12.229.53";
+                        InetAddress proxy = InetAddress.getByName(ip);
+                        Log.i(TAG, "Sending Ping Request to " + ip);
+                        if (proxy.isReachable(100)) {
+                            Log.i(TAG, "PROXY is reachable");
+                            System.setProperty("https.proxyHost", ip);
+                            System.setProperty("https.proxyPort", "3128");
+                            System.setProperty("com.google.api.client.should_use_proxy", "true");
+                        } else {
+                            Log.i(TAG, "PROXY is unreachable");
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "PROXY ping failed, doing nothing");
                 }
 
                 try {
@@ -3214,13 +3229,6 @@ public class FirebasePlugin extends CordovaPlugin {
 
                     Map<String, Object> docData = jsonStringToMap(jsonDoc);
 
-<<<<<<< HEAD
-                    if (timestamp) {
-                        docData.put("lastUpdate", new Timestamp(new Date()));
-                    }
-
-=======
->>>>>>> 9519487 (remove timestamps from android)
                     firestore.collection(collection).document(documentId)
                             .update(docData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -4284,7 +4292,11 @@ public class FirebasePlugin extends CordovaPlugin {
         }
     }
 
+<<<<<<< HEAD
     private boolean isUserSignedIn() {
+=======
+	private boolean isUserSignedIn(){
+>>>>>>> e648556 (ping proxy before making requests)
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user != null;
     }
