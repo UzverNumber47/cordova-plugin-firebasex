@@ -289,7 +289,7 @@ public class FirebasePlugin extends CordovaPlugin {
                         setPreference(GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS, true);
                     }
 
-                    immediateMessagePayloadDelivery = getPluginVariableFromConfigXml("FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY").equals("true");
+                    immediateMessagePayloadDelivery = "true".equals(getPluginVariableFromConfigXml("FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY"));
 
                     FirebaseApp.initializeApp(applicationContext);
                     mFirebaseAnalytics = FirebaseAnalytics.getInstance(applicationContext);
